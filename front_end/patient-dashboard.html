@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Dashboard - mediCare</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="navbar">
+  <div class="logo">🩺 mediCare</div>
+  <nav>
+    <a href="emergency.html">Emergency</a>
+    <span id="user-name" style="font-weight:600; color:#0f766e;"></span>
+    <button onclick="handleLogout()">Logout</button>
+    <span class="dark-toggle" onclick="toggleDarkMode()">🌓</span>
+  </nav>
+</div>
+
+<div class="container">
+  <div class="dashboard-grid">
+    <div class="sidebar">
+      <h3>Patient Menu</h3>
+      <div class="sidebar-item active" data-section="overview" onclick="showSection('overview')">🏠 Overview</div>
+      <div class="sidebar-item" data-section="profile" onclick="showSection('profile')">👤 My Profile</div>
+      <div class="sidebar-item" data-section="documents" onclick="showSection('documents')">📁 My Documents</div>
+      <div class="sidebar-item" data-section="medicines" onclick="showSection('medicines')">💊 Medicine Reminders</div>
+      <div class="sidebar-item" data-section="finddoctor" onclick="showSection('finddoctor')">🔍 Find Doctor</div>
+      <div class="sidebar-item" data-section="appointments" onclick="showSection('appointments')">📅 My Appointments</div>
+      <div class="sidebar-item" data-section="emergencyc" onclick="showSection('emergencyc')">🚨 Emergency Contacts</div>
+    </div>
+
+    <div class="main-content">
+
+      <div id="section-overview" class="section">
+        <div class="card">
+          <h3>Welcome to your Health Dashboard</h3>
+          <p style="color:#64748b;">Manage your medical records, appointments and medicine schedule from here.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Upcoming Appointments</h3>
+            <div id="overview-appointments">Loading...</div>
+          </div>
+          <div class="card">
+            <h3>Today's Medicine Schedule</h3>
+            <div id="overview-medicines">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="section-profile" class="section" style="display:none;">
+        <div class="card">
+          <h3>My Profile</h3>
+          <div id="profile-msg"></div>
+          <form onsubmit="saveProfile(event)">
+            <div class="grid-2">
+              <div class="form-group"><label>Phone</label><input id="p-phone"></div>
+              <div class="form-group"><label>Date of Birth</label><input type="date" id="p-dob"></div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group"><label>Blood Group</label>
+                <select id="p-blood">
+                  <option value="">Select</option>
+                  <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                  <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Address</label><input id="p-address"></div>
+            </div>
+            <div class="form-group"><label>Known Diseases / Conditions</label><textarea id="p-diseases" rows="3"></textarea></div>
+            <button class="btn" type="submit">Save Profile</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="section-documents" class="section" style="display:none;">
+        <div class="card">
+          <h3>Upload New Document</h3>
+          <form onsubmit="uploadDocument(event)">
+            <div class="grid-2">
+              <div class="form-group"><label>Type</label>
+                <select id="doc-type">
+                  <option value="prescription">Prescription</option>
+                  <option value="taken_medicine">Taken Medicine Record</option>
+                  <option value="disease">Diagnosed Disease</option>
+                  <option value="report">Lab Report</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Title</label><input id="doc-title" required></div>
+            </div>
+            <div class="form-group"><label>Related Disease (optional)</label><input id="doc-disease"></div>
+            <div class="form-group"><label>File</label><input type="file" id="doc-file"></div>
+            <button class="btn" type="submit">Upload</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>My Documents</h3>
+          <table>
+            <thead><tr><th>Title</th><th>Type</th><th>Disease</th><th>Date</th><th>File</th><th></th></tr></thead>
+            <tbody id="documents-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="section-medicines" class="section" style="display:none;">
+        <div class="card">
+          <h3>Add Medicine Schedule</h3>
+          <form onsubmit="addMedicine(event)">
+            <div class="grid-2">
+              <div class="form-group"><label>Medicine Name</label><input id="m-name" required></div>
+              <div class="form-group"><label>Dosage</label><input id="m-dosage" placeholder="e.g. 1 tablet"></div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group"><label>Start Date</label><input type="date" id="m-start"></div>
+              <div class="form-group"><label>End Date</label><input type="date" id="m-end"></div>
+            </div>
+            <div class="form-group"><label>Schedule Times (comma separated, e.g. 08:00,14:00,20:00)</label><input id="m-times" placeholder="08:00,20:00"></div>
+            <button class="btn" type="submit">Add Reminder</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>My Medicine Schedule</h3>
+          <table>
+            <thead><tr><th>Name</th><th>Dosage</th><th>Times</th><th>Period</th><th></th></tr></thead>
+            <tbody id="medicines-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="section-finddoctor" class="section" style="display:none;">
+        <div class="card">
+          <h3>Describe Your Issue - Get Suggested Doctors</h3>
+          <div class="form-group"><input id="issue-input" placeholder="e.g. chest pain, fever, tooth ache"></div>
+          <button class="btn" onclick="suggestDoctors()">Suggest Doctors</button>
+          <p id="suggested-spec" style="margin-top:10px; color:#64748b;"></p>
+        </div>
+        <div class="card">
+          <h3>All Doctors</h3>
+          <div class="form-group"><input id="doctor-search" placeholder="Search by name or specialization" oninput="searchDoctors()"></div>
+          <div id="doctors-list"></div>
+        </div>
+      </div>
+
+      <div id="section-appointments" class="section" style="display:none;">
+        <div class="card">
+          <h3>My Appointments</h3>
+          <table>
+            <thead><tr><th>Doctor</th><th>Specialization</th><th>Date</th><th>Time</th><th>Issue</th><th>Status</th></tr></thead>
+            <tbody id="appointments-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="section-emergencyc" class="section" style="display:none;">
+        <div class="card">
+          <h3>Add Emergency Contact</h3>
+          <form onsubmit="addContact(event)">
+            <div class="grid-2">
+              <div class="form-group"><label>Name</label><input id="c-name" required></div>
+              <div class="form-group"><label>Phone</label><input id="c-phone" required></div>
+            </div>
+            <div class="form-group"><label>Relation</label><input id="c-relation" placeholder="e.g. Father, Spouse"></div>
+            <button class="btn" type="submit">Add Contact</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>My Emergency Contacts</h3>
+          <div id="contacts-table"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="booking-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; align-items:center; justify-content:center;">
+  <div class="auth-card" style="max-width:420px;">
+    <h2>Book Appointment</h2>
+    <p class="sub" id="booking-doctor-name"></p>
+    <form onsubmit="bookAppointment(event)">
+      <input type="hidden" id="booking-doctor-id">
+      <div class="form-group"><label>Date</label><input type="date" id="booking-date" required></div>
+      <div class="form-group"><label>Time</label><input type="time" id="booking-time" required></div>
+      <div class="form-group"><label>Describe your issue</label><textarea id="booking-issue" rows="3"></textarea></div>
+      <button class="btn" type="submit" style="width:100%;">Confirm Booking</button>
+      <button class="btn btn-outline" type="button" style="width:100%; margin-top:8px;" onclick="closeBooking()">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<script src="../api.js"></script>
+<!-- <script src="../patient.js"></script> -->
+<!-- <script src="../reminder.js"></script> -->
+<script>
+  function handleLogout(){
+    logout()
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1785351273342",
+    "name": "Nahian Ahammed",
+    "email": "ahammad22205101712@diu.edu.bd",
+    "password": "5fd924625f6ab16a19cc9807c7c506ae1813490e4ba675f843d5a10e0baacdb8",
+    "role": "patient",
+    "createdAt": "2026-07-29T18:54:33.342Z"
+  },
+  {
+    "id": "1785351300231",
+    "name": "tanjim",
+    "email": "tanjim@gmail.com",
+    "password": "5fd924625f6ab16a19cc9807c7c506ae1813490e4ba675f843d5a10e0baacdb8",
+    "role": "doctor",
+    "createdAt": "2026-07-29T18:55:00.231Z"
+  }
+]

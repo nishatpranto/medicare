@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            🩺 MediCare
+        </div>
+
+        <nav>
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Appointments</a>
+            <a href="#">Patients</a>
+            <a href="#">Schedule</a>
+            <button class="dark-toggle">🌙</button>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <div class="dashboard-grid">
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+
+                <h3>Doctor Panel</h3>
+
+                <div class="sidebar-item active">
+                    📊 Dashboard
+                </div>
+
+                <div class="sidebar-item">
+                    📅 Today's Appointments
+                </div>
+
+                <div class="sidebar-item">
+                    👨‍⚕️ My Patients
+                </div>
+
+                <div class="sidebar-item">
+                    📁 Medical Records
+                </div>
+
+                <div class="sidebar-item">
+                    📝 Prescriptions
+                </div>
+
+                <div class="sidebar-item">
+                    🗓 Schedule
+                </div>
+
+                <div class="sidebar-item">
+                    ⚙ Settings
+                </div>
+
+            </aside>
+
+            <!-- Main Content -->
+            <main>
+
+                <!-- Welcome -->
+                <div class="card">
+                    <h3>Welcome Back, Dr. John Smith 👋</h3>
+
+                    <p>
+                        You have <strong>8 appointments</strong> today and
+                        <strong>3 pending reports</strong>.
+                    </p>
+                </div>
+
+                <!-- Statistics -->
+                <div class="grid-2">
+
+                    <div class="card">
+                        <h3>Today's Appointments</h3>
+                        <h1>08</h1>
+                        <p>2 Remaining</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Total Patients</h3>
+                        <h1>246</h1>
+                        <p>12 New This Month</p>
+                    </div>
+
+                </div>
+
+                <!-- Today's Appointments -->
+                <div class="card">
+
+                    <h3>Today's Schedule</h3>
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>09:00 AM</td>
+                                <td>Emily Johnson</td>
+                                <td>General Checkup</td>
+                                <td>
+                                    <span class="tag tag-confirmed">
+                                        Confirmed
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-small">
+                                        Start
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>10:30 AM</td>
+                                <td>Michael Brown</td>
+                                <td>Diabetes Follow-up</td>
+                                <td>
+                                    <span class="tag tag-pending">
+                                        Waiting
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-small">
+                                        Start
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>12:00 PM</td>
+                                <td>Sophia Wilson</td>
+                                <td>Skin Allergy</td>
+                                <td>
+                                    <span class="tag tag-confirmed">
+                                        Confirmed
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-small">
+                                        Start
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>02:00 PM</td>
+                                <td>David Lee</td>
+                                <td>Blood Pressure</td>
+                                <td>
+                                    <span class="tag tag-completed">
+                                        Completed
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline btn-small">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- Recent Patients -->
+                <div class="card">
+
+                    <h3>Recent Patients</h3>
+
+                    <div class="doctor-card">
+
+                        <div class="info">
+                            <h4>Sarah Williams</h4>
+                            <p>Age: 29 • Fever & Headache</p>
+                        </div>
+
+                        <button class="btn btn-small">
+                            View Record
+                        </button>
+
+                    </div>
+
+                    <div class="doctor-card">
+
+                        <div class="info">
+                            <h4>Daniel Clark</h4>
+                            <p>Age: 41 • Hypertension</p>
+                        </div>
+
+                        <button class="btn btn-small">
+                            View Record
+                        </button>
+
+                    </div>
+
+                    <div class="doctor-card">
+
+                        <div class="info">
+                            <h4>Olivia Davis</h4>
+                            <p>Age: 35 • Migraine</p>
+                        </div>
+
+                        <button class="btn btn-small">
+                            View Record
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- Notifications -->
+                <div class="card">
+
+                    <h3>Notifications</h3>
+
+                    <div class="alert alert-success">
+                        ✔ Lab report for Michael Brown is ready.
+                    </div>
+
+                    <div class="alert alert-error">
+                        ⚠ Appointment cancelled by Sarah Williams.
+                    </div>
+
+                </div>
+
+                <!-- FAQ -->
+                <div class="card">
+
+                    <h3>Quick Notes</h3>
+
+                    <div class="accordion-item">
+
+                        <div class="accordion-header">
+                            Morning Shift
+                            <span>+</span>
+                        </div>
+
+                        <div class="accordion-body">
+                            9:00 AM - 1:00 PM OPD consultation.
+                        </div>
+
+                    </div>
+
+                    <div class="accordion-item">
+
+                        <div class="accordion-header">
+                            Evening Shift
+                            <span>+</span>
+                        </div>
+
+                        <div class="accordion-body">
+                            4:00 PM - 8:00 PM Follow-up appointments.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Reminder -->
+    <div class="reminder-toast">
+        ⏰ Next Appointment starts in 15 minutes.
+    </div>
+
+</body>
+</html>
