@@ -1,202 +1,1607 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patient Dashboard - mediCare</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Patient Dashboard - MediCare</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div class="navbar">
-  <div class="logo">🩺 mediCare</div>
-  <nav>
-    <a href="emergency.html">Emergency</a>
-    <span id="user-name" style="font-weight:600; color:#0f766e;"></span>
-    <button onclick="handleLogout()">Logout</button>
-    <span class="dark-toggle" onclick="toggleDarkMode()">🌓</span>
-  </nav>
-</div>
 
-<div class="container">
-  <div class="dashboard-grid">
-    <div class="sidebar">
-      <h3>Patient Menu</h3>
-      <div class="sidebar-item active" data-section="overview" onclick="showSection('overview')">🏠 Overview</div>
-      <div class="sidebar-item" data-section="profile" onclick="showSection('profile')">👤 My Profile</div>
-      <div class="sidebar-item" data-section="documents" onclick="showSection('documents')">📁 My Documents</div>
-      <div class="sidebar-item" data-section="medicines" onclick="showSection('medicines')">💊 Medicine Reminders</div>
-      <div class="sidebar-item" data-section="finddoctor" onclick="showSection('finddoctor')">🔍 Find Doctor</div>
-      <div class="sidebar-item" data-section="appointments" onclick="showSection('appointments')">📅 My Appointments</div>
-      <div class="sidebar-item" data-section="emergencyc" onclick="showSection('emergencyc')">🚨 Emergency Contacts</div>
+  <!-- =========================
+       Navbar
+  ========================== -->
+
+  <header class="navbar">
+
+    <div class="logo">
+      🩺 MediCare
     </div>
 
-    <div class="main-content">
+    <nav>
 
-      <div id="section-overview" class="section">
-        <div class="card">
-          <h3>Welcome to your Health Dashboard</h3>
-          <p style="color:#64748b;">Manage your medical records, appointments and medicine schedule from here.</p>
-        </div>
-        <div class="grid-2">
+      <a href="emergency.html">
+        Emergency
+      </a>
+
+      <span
+        id="user-name"
+        style="font-weight:600; color:#0f766e;"
+      ></span>
+
+      <button onclick="handleLogout()">
+        Logout
+      </button>
+
+      <span
+        class="dark-toggle"
+        onclick="toggleDarkMode()"
+        title="Toggle dark mode"
+      >
+        🌓
+      </span>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =========================
+       Dashboard
+  ========================== -->
+
+  <main class="container">
+
+    <div class="dashboard-grid">
+
+
+      <!-- =========================
+           Sidebar
+      ========================== -->
+
+      <aside class="sidebar">
+
+        <h3>Patient Menu</h3>
+
+        <a
+          href="#section-overview"
+          class="sidebar-item active"
+          data-section="overview"
+          
+        >
+          🏠 Dashboard
+        </a>
+
+        <a
+          href="#section-profile"
+          class="sidebar-item"
+          data-section="profile"
+        >
+          👤 My Profile
+        </a>
+
+        <a
+          href="#section-documents"
+          class="sidebar-item"
+          data-section="documents"
+        >
+          📁 My Documents
+        </a>
+
+        <a
+          href="#section-medicines"
+          class="sidebar-item"
+          data-section="medicines"
+        >
+          💊 Medicine Reminders
+        </a>
+
+        <a
+          href="#section-finddoctor"
+          class="sidebar-item"
+          data-section="finddoctor"
+        >
+          🔍 Find Doctor
+        </a>
+
+        <a
+          href="#section-appointments"
+          class="sidebar-item"
+          data-section="appointments"
+        >
+          📅 My Appointments
+        </a>
+
+        <a
+          href="#section-emergencyc"
+          class="sidebar-item"
+          data-section="emergencyc"
+        >
+          🚨 Emergency Contacts
+        </a>
+
+      </aside>
+
+
+      <!-- =========================
+           Main Dashboard Content
+      ========================== -->
+
+      <section class="main-content">
+
+
+        <!-- =========================
+             OVERVIEW
+        ========================== -->
+
+        <section
+          id="section-overview"
+          class="section"
+        >
+
           <div class="card">
-            <h3>Upcoming Appointments</h3>
-            <div id="overview-appointments">Loading...</div>
+
+            <h3>
+              Welcome to your Health Dashboard
+            </h3>
+
+            <p style="color:#64748b;">
+              Manage your medical records, appointments
+              and medicine schedule from here.
+            </p>
+
           </div>
+
+
+          <div class="grid-2">
+
+            <div class="card">
+
+              <h3>
+                Upcoming Appointments
+              </h3>
+
+              <div id="overview-appointments">
+                Loading...
+              </div>
+
+            </div>
+
+
+            <div class="card">
+
+              <h3>
+                Today's Medicine Schedule
+              </h3>
+
+              <div id="overview-medicines">
+                Loading...
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             PROFILE
+        ========================== -->
+
+        <section
+          id="section-profile"
+          class="section"
+        >
+
           <div class="card">
-            <h3>Today's Medicine Schedule</h3>
-            <div id="overview-medicines">Loading...</div>
+
+            <h3>
+              My Profile
+            </h3>
+
+            <div id="profile-msg"></div>
+
+
+            <form onsubmit="saveProfile(event)">
+
+              <div class="grid-2">
+
+                <div class="form-group">
+
+                  <label for="p-phone">
+                    Phone
+                  </label>
+
+                  <input
+                    type="tel"
+                    id="p-phone"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="p-dob">
+                    Date of Birth
+                  </label>
+
+                  <input
+                    type="date"
+                    id="p-dob"
+                  >
+
+                </div>
+
+              </div>
+
+
+              <div class="grid-2">
+
+                <div class="form-group">
+
+                  <label for="p-blood">
+                    Blood Group
+                  </label>
+
+                  <select id="p-blood">
+
+                    <option value="">
+                      Select
+                    </option>
+
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+
+                  </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="p-address">
+                    Address
+                  </label>
+
+                  <input
+                    type="text"
+                    id="p-address"
+                  >
+
+                </div>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="p-diseases">
+                  Known Diseases / Conditions
+                </label>
+
+                <textarea
+                  id="p-diseases"
+                  rows="3"
+                ></textarea>
+
+              </div>
+
+
+              <button
+                class="btn"
+                type="submit"
+              >
+                Save Profile
+              </button>
+
+            </form>
+
           </div>
-        </div>
-      </div>
 
-      <div id="section-profile" class="section" style="display:none;">
-        <div class="card">
-          <h3>My Profile</h3>
-          <div id="profile-msg"></div>
-          <form onsubmit="saveProfile(event)">
-            <div class="grid-2">
-              <div class="form-group"><label>Phone</label><input id="p-phone"></div>
-              <div class="form-group"><label>Date of Birth</label><input type="date" id="p-dob"></div>
-            </div>
-            <div class="grid-2">
-              <div class="form-group"><label>Blood Group</label>
-                <select id="p-blood">
-                  <option value="">Select</option>
-                  <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-                  <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
-                </select>
+        </section>
+
+
+        <!-- =========================
+             DOCUMENTS
+        ========================== -->
+
+        <section
+          id="section-documents"
+          class="section"
+        >
+
+          <div class="card">
+
+            <h3>
+              Upload New Document
+            </h3>
+
+
+            <form onsubmit="uploadDocument(event)">
+
+              <div class="grid-2">
+
+                <div class="form-group">
+
+                  <label for="doc-type">
+                    Type
+                  </label>
+
+                  <select id="doc-type">
+
+                    <option value="prescription">
+                      Prescription
+                    </option>
+
+                    <option value="taken_medicine">
+                      Taken Medicine Record
+                    </option>
+
+                    <option value="disease">
+                      Diagnosed Disease
+                    </option>
+
+                    <option value="report">
+                      Lab Report
+                    </option>
+
+                    <option value="other">
+                      Other
+                    </option>
+
+                  </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="doc-title">
+                    Title
+                  </label>
+
+                  <input
+                    id="doc-title"
+                    required
+                  >
+
+                </div>
+
               </div>
-              <div class="form-group"><label>Address</label><input id="p-address"></div>
-            </div>
-            <div class="form-group"><label>Known Diseases / Conditions</label><textarea id="p-diseases" rows="3"></textarea></div>
-            <button class="btn" type="submit">Save Profile</button>
-          </form>
-        </div>
-      </div>
 
-      <div id="section-documents" class="section" style="display:none;">
-        <div class="card">
-          <h3>Upload New Document</h3>
-          <form onsubmit="uploadDocument(event)">
-            <div class="grid-2">
-              <div class="form-group"><label>Type</label>
-                <select id="doc-type">
-                  <option value="prescription">Prescription</option>
-                  <option value="taken_medicine">Taken Medicine Record</option>
-                  <option value="disease">Diagnosed Disease</option>
-                  <option value="report">Lab Report</option>
-                  <option value="other">Other</option>
-                </select>
+
+              <div class="form-group">
+
+                <label for="doc-disease">
+                  Related Disease
+                </label>
+
+                <input
+                  id="doc-disease"
+                  placeholder="Optional"
+                >
+
               </div>
-              <div class="form-group"><label>Title</label><input id="doc-title" required></div>
-            </div>
-            <div class="form-group"><label>Related Disease (optional)</label><input id="doc-disease"></div>
-            <div class="form-group"><label>File</label><input type="file" id="doc-file"></div>
-            <button class="btn" type="submit">Upload</button>
-          </form>
-        </div>
-        <div class="card">
-          <h3>My Documents</h3>
-          <table>
-            <thead><tr><th>Title</th><th>Type</th><th>Disease</th><th>Date</th><th>File</th><th></th></tr></thead>
-            <tbody id="documents-table"></tbody>
-          </table>
-        </div>
-      </div>
 
-      <div id="section-medicines" class="section" style="display:none;">
-        <div class="card">
-          <h3>Add Medicine Schedule</h3>
-          <form onsubmit="addMedicine(event)">
-            <div class="grid-2">
-              <div class="form-group"><label>Medicine Name</label><input id="m-name" required></div>
-              <div class="form-group"><label>Dosage</label><input id="m-dosage" placeholder="e.g. 1 tablet"></div>
-            </div>
-            <div class="grid-2">
-              <div class="form-group"><label>Start Date</label><input type="date" id="m-start"></div>
-              <div class="form-group"><label>End Date</label><input type="date" id="m-end"></div>
-            </div>
-            <div class="form-group"><label>Schedule Times (comma separated, e.g. 08:00,14:00,20:00)</label><input id="m-times" placeholder="08:00,20:00"></div>
-            <button class="btn" type="submit">Add Reminder</button>
-          </form>
-        </div>
-        <div class="card">
-          <h3>My Medicine Schedule</h3>
-          <table>
-            <thead><tr><th>Name</th><th>Dosage</th><th>Times</th><th>Period</th><th></th></tr></thead>
-            <tbody id="medicines-table"></tbody>
-          </table>
-        </div>
-      </div>
 
-      <div id="section-finddoctor" class="section" style="display:none;">
-        <div class="card">
-          <h3>Describe Your Issue - Get Suggested Doctors</h3>
-          <div class="form-group"><input id="issue-input" placeholder="e.g. chest pain, fever, tooth ache"></div>
-          <button class="btn" onclick="suggestDoctors()">Suggest Doctors</button>
-          <p id="suggested-spec" style="margin-top:10px; color:#64748b;"></p>
-        </div>
-        <div class="card">
-          <h3>All Doctors</h3>
-          <div class="form-group"><input id="doctor-search" placeholder="Search by name or specialization" oninput="searchDoctors()"></div>
-          <div id="doctors-list"></div>
-        </div>
-      </div>
+              <div class="form-group">
 
-      <div id="section-appointments" class="section" style="display:none;">
-        <div class="card">
-          <h3>My Appointments</h3>
-          <table>
-            <thead><tr><th>Doctor</th><th>Specialization</th><th>Date</th><th>Time</th><th>Issue</th><th>Status</th></tr></thead>
-            <tbody id="appointments-table"></tbody>
-          </table>
-        </div>
-      </div>
+                <label for="doc-file">
+                  File
+                </label>
 
-      <div id="section-emergencyc" class="section" style="display:none;">
-        <div class="card">
-          <h3>Add Emergency Contact</h3>
-          <form onsubmit="addContact(event)">
-            <div class="grid-2">
-              <div class="form-group"><label>Name</label><input id="c-name" required></div>
-              <div class="form-group"><label>Phone</label><input id="c-phone" required></div>
+                <input
+                  type="file"
+                  id="doc-file"
+                >
+
+              </div>
+
+
+              <button
+                class="btn"
+                type="submit"
+              >
+                Upload
+              </button>
+
+            </form>
+
+          </div>
+
+
+          <div class="card">
+
+            <h3>
+              My Documents
+            </h3>
+
+            <div style="overflow-x:auto;">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Disease</th>
+                    <th>Date</th>
+                    <th>File</th>
+                    <th>Action</th>
+                  </tr>
+
+                </thead>
+
+                <tbody id="documents-table"></tbody>
+
+              </table>
+
             </div>
-            <div class="form-group"><label>Relation</label><input id="c-relation" placeholder="e.g. Father, Spouse"></div>
-            <button class="btn" type="submit">Add Contact</button>
-          </form>
-        </div>
-        <div class="card">
-          <h3>My Emergency Contacts</h3>
-          <div id="contacts-table"></div>
-        </div>
-      </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             MEDICINES
+        ========================== -->
+
+        <section
+          id="section-medicines"
+          class="section"
+        >
+
+          <div class="card">
+
+            <h3>
+              Add Medicine Schedule
+            </h3>
+
+
+            <form onsubmit="addMedicine(event)">
+
+              <div class="grid-2">
+
+                <div class="form-group">
+
+                  <label for="m-name">
+                    Medicine Name
+                  </label>
+
+                  <input
+                    id="m-name"
+                    required
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="m-dosage">
+                    Dosage
+                  </label>
+
+                  <input
+                    id="m-dosage"
+                    placeholder="e.g. 1 tablet"
+                  >
+
+                </div>
+
+              </div>
+
+
+              <div class="grid-2">
+
+                <div class="form-group">
+
+                  <label for="m-start">
+                    Start Date
+                  </label>
+
+                  <input
+                    type="date"
+                    id="m-start"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="m-end">
+                    End Date
+                  </label>
+
+                  <input
+                    type="date"
+                    id="m-end"
+                  >
+
+                </div>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="m-times">
+                  Schedule Times
+                </label>
+
+                <input
+                  id="m-times"
+                  placeholder="08:00,14:00,20:00"
+                >
+
+                <small style="color:var(--muted);">
+                  Example: 08:00, 14:00, 20:00
+                </small>
+
+              </div>
+
+
+              <button
+                class="btn"
+                type="submit"
+              >
+                Add Reminder
+              </button>
+
+            </form>
+
+          </div>
+
+
+          <div class="card">
+
+            <h3>
+              My Medicine Schedule
+            </h3>
+
+            <div style="overflow-x:auto;">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <th>Name</th>
+                    <th>Dosage</th>
+                    <th>Times</th>
+                    <th>Period</th>
+                    <th>Action</th>
+                  </tr>
+
+                </thead>
+
+                <tbody id="medicines-table"></tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             FIND DOCTOR
+        ========================== -->
+
+        <section
+          id="section-finddoctor"
+          class="section"
+        >
+
+          <div class="card">
+
+            <h3>
+              Describe Your Issue
+            </h3>
+
+            <p style="color:var(--muted); margin-bottom:15px;">
+              Get suggested doctors based on your health issue.
+            </p>
+
+
+            <div class="form-group">
+
+              <label for="issue-input">
+                Your Issue
+              </label>
+
+              <input
+                id="issue-input"
+                placeholder="e.g. chest pain, fever, tooth ache"
+              >
+
+            </div>
+
+
+            <button
+              class="btn"
+              onclick="suggestDoctors()"
+            >
+              Suggest Doctors
+            </button>
+
+
+            <p
+              id="suggested-spec"
+              style="margin-top:10px; color:#64748b;"
+            ></p>
+
+          </div>
+
+
+          <div class="card">
+
+            <h3>
+              All Doctors
+            </h3>
+
+
+            <div class="form-group">
+
+              <label for="doctor-search">
+                Search Doctor
+              </label>
+
+              <input
+                id="doctor-search"
+                placeholder="Search by name or specialization"
+                oninput="searchDoctors()"
+              >
+
+            </div>
+
+
+            <div id="doctors-list">
+
+              Loading doctors...
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             APPOINTMENTS
+        ========================== -->
+
+        <section
+          id="section-appointments"
+          class="section"
+        >
+
+          <div class="card">
+
+            <h3>
+              My Appointments
+            </h3>
+
+            <p style="color:var(--muted); margin-bottom:18px;">
+              View all your upcoming and previous appointments.
+            </p>
+
+
+            <div style="overflow-x:auto;">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <th>Doctor</th>
+                    <th>Specialization</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Issue</th>
+                    <th>Status</th>
+                  </tr>
+
+                </thead>
+
+
+                <tbody id="appointments-table"></tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             EMERGENCY CONTACTS
+        ========================== -->
+
+        <section
+          id="section-emergencyc"
+          class="section"
+        >
+
+          <div class="card">
+
+            <h3>
+              Add Emergency Contact
+            </h3>
+
+
+            <form onsubmit="addContact(event)">
+
+              <div class="grid-2">
+
+                <div class="form-group">
+
+                  <label for="c-name">
+                    Name
+                  </label>
+
+                  <input
+                    id="c-name"
+                    required
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label for="c-phone">
+                    Phone
+                  </label>
+
+                  <input
+                    id="c-phone"
+                    type="tel"
+                    required
+                  >
+
+                </div>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="c-relation">
+                  Relation
+                </label>
+
+                <input
+                  id="c-relation"
+                  placeholder="e.g. Father, Spouse"
+                >
+
+              </div>
+
+
+              <button
+                class="btn"
+                type="submit"
+              >
+                Add Contact
+              </button>
+
+            </form>
+
+          </div>
+
+
+          <div class="card">
+
+            <h3>
+              My Emergency Contacts
+            </h3>
+
+            <div id="contacts-table">
+
+              No emergency contacts added yet.
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </section>
 
     </div>
-  </div>
-</div>
 
-<div id="booking-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; align-items:center; justify-content:center;">
-  <div class="auth-card" style="max-width:420px;">
-    <h2>Book Appointment</h2>
-    <p class="sub" id="booking-doctor-name"></p>
-    <form onsubmit="bookAppointment(event)">
-      <input type="hidden" id="booking-doctor-id">
-      <div class="form-group"><label>Date</label><input type="date" id="booking-date" required></div>
-      <div class="form-group"><label>Time</label><input type="time" id="booking-time" required></div>
-      <div class="form-group"><label>Describe your issue</label><textarea id="booking-issue" rows="3"></textarea></div>
-      <button class="btn" type="submit" style="width:100%;">Confirm Booking</button>
-      <button class="btn btn-outline" type="button" style="width:100%; margin-top:8px;" onclick="closeBooking()">Cancel</button>
-    </form>
-  </div>
-</div>
+  </main>
 
-<script src="../api.js"></script>
-<!-- <script src="../patient.js"></script> -->
-<!-- <script src="../reminder.js"></script> -->
-<script>
-  function handleLogout(){
-    logout()
-  }
-</script>
+
+  <!-- =========================
+       Booking Modal
+  ========================== -->
+
+  <div
+    id="booking-modal"
+    style="
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:200;
+      align-items:center;
+      justify-content:center;
+    "
+  >
+
+    <div
+      class="auth-card"
+      style="max-width:420px;"
+    >
+
+      <h2>
+        Book Appointment
+      </h2>
+
+      <p
+        class="sub"
+        id="booking-doctor-name"
+      ></p>
+
+
+      <form onsubmit="bookAppointment(event)">
+
+        <input
+          type="hidden"
+          id="booking-doctor-id"
+        >
+
+
+        <div class="form-group">
+
+          <label for="booking-date">
+            Date
+          </label>
+
+          <input
+            type="date"
+            id="booking-date"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="booking-time">
+            Time
+          </label>
+
+          <input
+            type="time"
+            id="booking-time"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="booking-issue">
+            Describe your issue
+          </label>
+
+          <textarea
+            id="booking-issue"
+            rows="3"
+          ></textarea>
+
+        </div>
+
+
+        <button
+          class="btn"
+          type="submit"
+          style="width:100%;"
+        >
+          Confirm Booking
+        </button>
+
+
+        <button
+          class="btn btn-outline"
+          type="button"
+          style="width:100%; margin-top:8px;"
+          onclick="closeBooking()"
+        >
+          Cancel
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       JavaScript
+  ========================== -->
+
+  <script src="../api.js"></script>
+
+  <script>
+
+    /*
+     * ALL SECTIONS ARE VISIBLE.
+     *
+     * The sidebar now works as navigation.
+     * Clicking a menu item scrolls to that section
+     * instead of hiding the other sections.
+     */
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      setupSectionNavigation();
+
+      loadDashboardData();
+
+    });
+
+
+    /* =========================
+       Section Navigation
+    ========================== */
+
+    function setupSectionNavigation() {
+
+      const menuItems =
+        document.querySelectorAll(".sidebar-item");
+
+
+      menuItems.forEach(item => {
+
+        item.addEventListener("click", function (event) {
+
+          event.preventDefault();
+
+
+          const sectionName =
+            this.dataset.section;
+
+          const target =
+            document.getElementById(
+              "section-" + sectionName
+            );
+
+
+          if (!target) {
+            return;
+          }
+
+
+          /*
+           * Update active menu item
+           */
+
+          menuItems.forEach(menu => {
+
+            menu.classList.remove("active");
+
+          });
+
+          this.classList.add("active");
+
+
+          /*
+           * Scroll to selected section
+           */
+
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+        });
+
+      });
+
+    }
+
+
+    /* =========================
+       Show Section
+       =========================
+       
+       Kept for compatibility with
+       your old JavaScript.
+       
+       It DOES NOT hide sections.
+    */
+
+    function showSection(sectionName) {
+
+      const target =
+        document.getElementById(
+          "section-" + sectionName
+        );
+
+
+      if (!target) {
+        return;
+      }
+
+
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+
+      document
+        .querySelectorAll(".sidebar-item")
+        .forEach(item => {
+
+          item.classList.remove("active");
+
+        });
+
+
+      const activeItem =
+        document.querySelector(
+          `.sidebar-item[data-section="${sectionName}"]`
+        );
+
+
+      if (activeItem) {
+        activeItem.classList.add("active");
+      }
+
+    }
+
+
+    /* =========================
+       Load Dashboard Data
+    ========================== */
+
+    function loadDashboardData() {
+
+      /*
+       * These functions can be provided by
+       * your api.js / patient.js files.
+       */
+
+      try {
+
+        if (typeof loadAppointments === "function") {
+          loadAppointments();
+        }
+
+        if (typeof loadMedicines === "function") {
+          loadMedicines();
+        }
+
+        if (typeof loadDocuments === "function") {
+          loadDocuments();
+        }
+
+        if (typeof loadDoctors === "function") {
+          loadDoctors();
+        }
+
+        if (typeof loadContacts === "function") {
+          loadContacts();
+        }
+
+        if (typeof loadProfile === "function") {
+          loadProfile();
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Dashboard loading error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* =========================
+       Logout
+    ========================== */
+
+    function handleLogout() {
+
+      if (typeof logout === "function") {
+
+        logout();
+
+        return;
+
+      }
+
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      window.location.href = "login.html";
+
+    }
+
+
+    /* =========================
+       Dark Mode
+    ========================== */
+
+    function toggleDarkMode() {
+
+      document.body.classList.toggle("dark");
+
+
+      /*
+       * Save preference
+       */
+
+      if (
+        document.body.classList.contains("dark")
+      ) {
+
+        localStorage.setItem(
+          "darkMode",
+          "enabled"
+        );
+
+      } else {
+
+        localStorage.setItem(
+          "darkMode",
+          "disabled"
+        );
+
+      }
+
+    }
+
+
+    /*
+     * Restore dark mode
+     */
+
+    if (
+      localStorage.getItem("darkMode") === "enabled"
+    ) {
+
+      document.body.classList.add("dark");
+
+    }
+
+
+    /* =========================
+       Profile
+    ========================== */
+
+    function saveProfile(event) {
+
+      event.preventDefault();
+
+
+      const message =
+        document.getElementById("profile-msg");
+
+
+      message.innerHTML = `
+        <div class="alert alert-success">
+          Profile updated successfully.
+        </div>
+      `;
+
+
+      setTimeout(function () {
+
+        message.innerHTML = "";
+
+      }, 3000);
+
+    }
+
+
+    /* =========================
+       Documents
+    ========================== */
+
+    function uploadDocument(event) {
+
+      event.preventDefault();
+
+
+      const title =
+        document.getElementById("doc-title").value;
+
+
+      if (!title) {
+        return;
+      }
+
+
+      const table =
+        document.getElementById("documents-table");
+
+
+      const row =
+        document.createElement("tr");
+
+
+      row.innerHTML = `
+
+        <td>
+          ${title}
+        </td>
+
+        <td>
+          ${document.getElementById("doc-type").value}
+        </td>
+
+        <td>
+          ${document.getElementById("doc-disease").value || "—"}
+        </td>
+
+        <td>
+          ${new Date().toLocaleDateString()}
+        </td>
+
+        <td>
+          ${document.getElementById("doc-file").files[0]?.name || "No file"}
+        </td>
+
+        <td>
+          <button
+            type="button"
+            class="btn btn-small btn-danger"
+            onclick="this.closest('tr').remove()"
+          >
+            Delete
+          </button>
+        </td>
+
+      `;
+
+
+      table.appendChild(row);
+
+
+      event.target.reset();
+
+    }
+
+
+    /* =========================
+       Medicines
+    ========================== */
+
+    function addMedicine(event) {
+
+      event.preventDefault();
+
+
+      const name =
+        document.getElementById("m-name").value;
+
+      const dosage =
+        document.getElementById("m-dosage").value;
+
+      const start =
+        document.getElementById("m-start").value;
+
+      const end =
+        document.getElementById("m-end").value;
+
+      const times =
+        document.getElementById("m-times").value;
+
+
+      const table =
+        document.getElementById("medicines-table");
+
+
+      const row =
+        document.createElement("tr");
+
+
+      row.innerHTML = `
+
+        <td>
+          ${name}
+        </td>
+
+        <td>
+          ${dosage || "—"}
+        </td>
+
+        <td>
+          ${times || "—"}
+        </td>
+
+        <td>
+          ${start || "—"} to ${end || "—"}
+        </td>
+
+        <td>
+
+          <button
+            type="button"
+            class="btn btn-small btn-danger"
+            onclick="this.closest('tr').remove()"
+          >
+            Delete
+          </button>
+
+        </td>
+
+      `;
+
+
+      table.appendChild(row);
+
+
+      event.target.reset();
+
+    }
+
+
+    /* =========================
+       Doctors
+    ========================== */
+
+    function suggestDoctors() {
+
+      const issue =
+        document.getElementById("issue-input")
+          .value
+          .toLowerCase();
+
+
+      const result =
+        document.getElementById("suggested-spec");
+
+
+      if (!issue) {
+
+        result.textContent =
+          "Please describe your issue first.";
+
+        return;
+
+      }
+
+
+      let specialization =
+        "General Physician";
+
+
+      if (
+        issue.includes("tooth") ||
+        issue.includes("teeth") ||
+        issue.includes("gum")
+      ) {
+
+        specialization =
+          "Dentist";
+
+      }
+
+      else if (
+        issue.includes("skin") ||
+        issue.includes("rash")
+      ) {
+
+        specialization =
+          "Dermatologist";
+
+      }
+
+      else if (
+        issue.includes("heart") ||
+        issue.includes("chest")
+      ) {
+
+        specialization =
+          "Cardiologist";
+
+      }
+
+      else if (
+        issue.includes("eye") ||
+        issue.includes("vision")
+      ) {
+
+        specialization =
+          "Ophthalmologist";
+
+      }
+
+
+      result.textContent =
+        "Suggested specialization: " +
+        specialization;
+
+    }
+
+
+    function searchDoctors() {
+
+      const search =
+        document.getElementById("doctor-search")
+          .value
+          .toLowerCase();
+
+
+      const doctors =
+        document.querySelectorAll(
+          "#doctors-list .doctor-card"
+        );
+
+
+      doctors.forEach(doctor => {
+
+        const text =
+          doctor.textContent.toLowerCase();
+
+
+        doctor.style.display =
+          text.includes(search)
+            ? ""
+            : "none";
+
+      });
+
+    }
+
+
+    /* =========================
+       Emergency Contacts
+    ========================== */
+
+    function addContact(event) {
+
+      event.preventDefault();
+
+
+      const name =
+        document.getElementById("c-name").value;
+
+      const phone =
+        document.getElementById("c-phone").value;
+
+      const relation =
+        document.getElementById("c-relation").value;
+
+
+      const container =
+        document.getElementById("contacts-table");
+
+
+      const contact =
+        document.createElement("div");
+
+
+      contact.className =
+        "doctor-card";
+
+
+      contact.innerHTML = `
+
+        <div class="info">
+
+          <h4>
+            ${name}
+          </h4>
+
+          <p>
+            ${relation || "Emergency Contact"}
+          </p>
+
+          <p>
+            ${phone}
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="btn btn-small btn-danger"
+          onclick="this.closest('.doctor-card').remove()"
+        >
+          Delete
+        </button>
+
+      `;
+
+
+      /*
+       * Remove default text if this is
+       * the first contact.
+       */
+
+      if (
+        container.textContent.includes(
+          "No emergency contacts"
+        )
+      ) {
+
+        container.innerHTML = "";
+
+      }
+
+
+      container.appendChild(contact);
+
+
+      event.target.reset();
+
+    }
+
+
+    /* =========================
+       Booking
+    ========================== */
+
+    function closeBooking() {
+
+      document.getElementById(
+        "booking-modal"
+      ).style.display = "none";
+
+    }
+
+
+    function bookAppointment(event) {
+
+      event.preventDefault();
+
+
+      const modal =
+        document.getElementById(
+          "booking-modal"
+        );
+
+
+      modal.style.display = "none";
+
+
+      alert(
+        "Appointment booked successfully."
+      );
+
+
+      event.target.reset();
+
+    }
+
+  </script>
+
 </body>
+
 </html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Dashboard - Appointments</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      🩺 MediCare
+    </div>
+
+    <nav>
+        <a href="doctor-dashboard.html" class="active">Dashboard</a>
+        <a href="doctor-dashboard-appointment.html">Appointments</a>
+        <a href="doctor-dashboard-patient.html">Patients</a>
+        <a href="doctor-dashboard-schedule.html">Schedule</a>
+        <button onclick="handleLogout()">Logout</button>
+    </nav>
+  </header>
+
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Page Header -->
+    <div class="card">
+      <span style="color: var(--primary); font-size: 14px; font-weight: 600;">
+        Doctor Dashboard
+      </span>
+
+      <h1 style="margin: 8px 0;">
+        Appointments
+      </h1>
+
+      <p style="color: var(--muted);">
+        Manage your upcoming and previous patient appointments.
+      </p>
+    </div>
+
+
+    <!-- Appointment Statistics -->
+    <div class="features">
+
+      <div class="feature-card">
+        <div class="icon">📅</div>
+        <h3>Today</h3>
+        <p>
+          <strong id="todayAppointmentCount">4</strong>
+          appointments
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">⏳</div>
+        <h3>Pending</h3>
+        <p>
+          <strong id="pendingAppointmentCount">3</strong>
+          appointments
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">✓</div>
+        <h3>Confirmed</h3>
+        <p>
+          <strong id="confirmedAppointmentCount">5</strong>
+          appointments
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">✓</div>
+        <h3>Completed</h3>
+        <p>
+          <strong id="completedAppointmentCount">18</strong>
+          appointments
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- Search and Filter -->
+    <div class="card">
+
+      <div class="grid-2">
+
+        <div class="form-group">
+          <label for="appointmentSearch">
+            Search Appointments
+          </label>
+
+          <input
+            type="search"
+            id="appointmentSearch"
+            placeholder="Search patient or issue..."
+            autocomplete="off"
+          >
+        </div>
+
+
+        <div class="form-group">
+          <label for="appointmentStatusFilter">
+            Filter by Status
+          </label>
+
+          <select id="appointmentStatusFilter">
+            <option value="all">All appointments</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Appointment Table -->
+    <div class="card">
+
+      <h3>Patient Appointments</h3>
+
+      <p style="color: var(--muted); margin-bottom: 20px;">
+        Review appointment details and update their status.
+      </p>
+
+
+      <div style="overflow-x: auto;">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Issue</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="doctorAppointmentsBody">
+
+            <!-- Pending Appointment -->
+            <tr data-status="pending">
+
+              <td>
+                <strong>John Doe</strong>
+                <br>
+                <small style="color: var(--muted);">
+                  john@example.com
+                </small>
+              </td>
+
+              <td>Aug 18, 2026</td>
+
+              <td>10:30 AM</td>
+
+              <td>Fever and cough</td>
+
+              <td>
+                <span class="tag tag-pending">
+                  Pending
+                </span>
+              </td>
+
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-small"
+                >
+                  Confirm
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-danger"
+                >
+                  Cancel
+                </button>
+              </td>
+
+            </tr>
+
+
+            <!-- Confirmed Appointment -->
+            <tr data-status="confirmed">
+
+              <td>
+                <strong>Sarah Ahmed</strong>
+                <br>
+                <small style="color: var(--muted);">
+                  sarah@example.com
+                </small>
+              </td>
+
+              <td>Aug 18, 2026</td>
+
+              <td>11:30 AM</td>
+
+              <td>Chest pain</td>
+
+              <td>
+                <span class="tag tag-confirmed">
+                  Confirmed
+                </span>
+              </td>
+
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                >
+                  View
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-small"
+                >
+                  Complete
+                </button>
+              </td>
+
+            </tr>
+
+
+            <!-- Completed Appointment -->
+            <tr data-status="completed">
+
+              <td>
+                <strong>Rahim Khan</strong>
+                <br>
+                <small style="color: var(--muted);">
+                  rahim@example.com
+                </small>
+              </td>
+
+              <td>Aug 17, 2026</td>
+
+              <td>09:00 AM</td>
+
+              <td>Skin irritation</td>
+
+              <td>
+                <span class="tag tag-completed">
+                  Completed
+                </span>
+              </td>
+
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                >
+                  View
+                </button>
+              </td>
+
+            </tr>
+
+
+            <!-- Cancelled Appointment -->
+            <tr data-status="cancelled">
+
+              <td>
+                <strong>Nusrat Mahin</strong>
+                <br>
+                <small style="color: var(--muted);">
+                  nusrat@example.com
+                </small>
+              </td>
+
+              <td>Aug 16, 2026</td>
+
+              <td>02:00 PM</td>
+
+              <td>Headache</td>
+
+              <td>
+                <span class="tag tag-cancelled">
+                  Cancelled
+                </span>
+              </td>
+
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                >
+                  View
+                </button>
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- Empty State -->
+      <div
+        id="appointmentsEmptyState"
+        hidden
+        style="
+          text-align: center;
+          padding: 40px 20px;
+          color: var(--muted);
+        "
+      >
+        <div style="font-size: 40px; margin-bottom: 10px;">
+          📅
+        </div>
+
+        <h3>No appointments found</h3>
+
+        <p>
+          No appointments match the current search or filter.
+        </p>
+      </div>
+
+    </div>
+
+  </main>
+
+<script src="../api.js"></script>
+  <script>
+    function handleLogout() {
+        logout()
+    }
+
+
+    const searchInput = document.getElementById("appointmentSearch");
+    const statusFilter = document.getElementById("appointmentStatusFilter");
+    const tableBody = document.getElementById("doctorAppointmentsBody");
+    const emptyState = document.getElementById("appointmentsEmptyState");
+
+    function filterAppointments() {
+
+      const searchValue = searchInput.value.toLowerCase();
+      const selectedStatus = statusFilter.value;
+
+      const rows = tableBody.querySelectorAll("tr");
+
+      let visibleRows = 0;
+
+      rows.forEach(row => {
+
+        const rowText = row.textContent.toLowerCase();
+        const rowStatus = row.dataset.status;
+
+        const matchesSearch =
+          rowText.includes(searchValue);
+
+        const matchesStatus =
+          selectedStatus === "all" ||
+          rowStatus === selectedStatus;
+
+        if (matchesSearch && matchesStatus) {
+          row.style.display = "";
+          visibleRows++;
+        } else {
+          row.style.display = "none";
+        }
+
+      });
+
+      emptyState.hidden = visibleRows !== 0;
+    }
+
+
+    searchInput.addEventListener(
+      "input",
+      filterAppointments
+    );
+
+    statusFilter.addEventListener(
+      "change",
+      filterAppointments
+    );
+  </script>
+
+</body>
+</html>

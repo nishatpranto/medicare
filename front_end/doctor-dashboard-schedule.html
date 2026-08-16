@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Doctor Dashboard - Schedule</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =========================
+       Navbar
+  ========================== -->
+
+  <header class="navbar">
+
+    <div class="logo">
+      🩺 MediCare
+    </div>
+
+    <nav>
+
+      <a href="doctor-dashboard.html">
+        Dashboard
+      </a>
+
+      <a href="doctor-dashboard-appointment.html">
+        Appointments
+      </a>
+
+      <a href="doctor-dashboard-patient.html">
+        Patients
+      </a>
+
+      <a href="doctor-dashboard-schedule.html" class="active">
+        Schedule
+      </a>
+
+      <button onclick="handleLogout()">
+        Logout
+      </button>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =========================
+       Main Content
+  ========================== -->
+
+  <main class="container">
+
+
+    <!-- Page Header -->
+
+    <div class="card">
+
+      <h2>My Schedule</h2>
+
+      <p style="color: var(--muted);">
+        Manage your availability and consultation hours.
+      </p>
+
+    </div>
+
+
+    <!-- =========================
+         Schedule Statistics
+    ========================== -->
+
+    <div class="features">
+
+      <div class="feature-card">
+
+        <div class="icon">
+          📅
+        </div>
+
+        <h3>Today's Schedule</h3>
+
+        <p>
+          <strong id="todayScheduleCount">4</strong>
+          appointments
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="icon">
+          🕐
+        </div>
+
+        <h3>Working Hours</h3>
+
+        <p>
+          <strong id="workingHoursCount">8</strong>
+          hours today
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="icon">
+          ⏰
+        </div>
+
+        <h3>Available Slots</h3>
+
+        <p>
+          <strong id="availableSlotsCount">6</strong>
+          slots available
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="icon">
+          🩺
+        </div>
+
+        <h3>Consultation Time</h3>
+
+        <p>
+          <strong>30</strong>
+          minutes per patient
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         Set Availability
+    ========================== -->
+
+    <div class="card">
+
+      <h3>Set Availability</h3>
+
+      <p style="color: var(--muted); margin-bottom: 20px;">
+        Set the days and hours when patients can book appointments.
+      </p>
+
+
+      <div class="grid-2">
+
+
+        <!-- Day -->
+
+        <div class="form-group">
+
+          <label for="scheduleDay">
+            Day
+          </label>
+
+          <select id="scheduleDay">
+
+            <option value="monday">
+              Monday
+            </option>
+
+            <option value="tuesday">
+              Tuesday
+            </option>
+
+            <option value="wednesday">
+              Wednesday
+            </option>
+
+            <option value="thursday">
+              Thursday
+            </option>
+
+            <option value="friday">
+              Friday
+            </option>
+
+            <option value="saturday">
+              Saturday
+            </option>
+
+            <option value="sunday">
+              Sunday
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- Status -->
+
+        <div class="form-group">
+
+          <label for="scheduleStatus">
+            Availability
+          </label>
+
+          <select id="scheduleStatus">
+
+            <option value="available">
+              Available
+            </option>
+
+            <option value="unavailable">
+              Unavailable
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- Start Time -->
+
+        <div class="form-group">
+
+          <label for="startTime">
+            Start Time
+          </label>
+
+          <input
+            type="time"
+            id="startTime"
+            value="09:00"
+          >
+
+        </div>
+
+
+        <!-- End Time -->
+
+        <div class="form-group">
+
+          <label for="endTime">
+            End Time
+          </label>
+
+          <input
+            type="time"
+            id="endTime"
+            value="17:00"
+          >
+
+        </div>
+
+
+        <!-- Break Start -->
+
+        <div class="form-group">
+
+          <label for="breakStart">
+            Break Start
+          </label>
+
+          <input
+            type="time"
+            id="breakStart"
+            value="13:00"
+          >
+
+        </div>
+
+
+        <!-- Break End -->
+
+        <div class="form-group">
+
+          <label for="breakEnd">
+            Break End
+          </label>
+
+          <input
+            type="time"
+            id="breakEnd"
+            value="14:00"
+          >
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="btn"
+        onclick="saveSchedule()"
+      >
+        Save Schedule
+      </button>
+
+    </div>
+
+
+    <!-- =========================
+         Weekly Schedule
+    ========================== -->
+
+    <div class="card">
+
+      <h3>Weekly Schedule</h3>
+
+      <p style="color: var(--muted); margin-bottom: 18px;">
+        Your regular weekly availability.
+      </p>
+
+
+      <div style="overflow-x: auto;">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Day</th>
+              <th>Availability</th>
+              <th>Working Hours</th>
+              <th>Break</th>
+              <th>Appointments</th>
+              <th>Action</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody id="weeklyScheduleBody">
+
+
+            <!-- Monday -->
+
+            <tr data-day="monday">
+
+              <td>
+                <strong>Monday</strong>
+              </td>
+
+              <td>
+                <span class="tag tag-verified">
+                  Available
+                </span>
+              </td>
+
+              <td>
+                09:00 AM - 05:00 PM
+              </td>
+
+              <td>
+                01:00 PM - 02:00 PM
+              </td>
+
+              <td>
+                6
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="editSchedule('monday')"
+                >
+                  Edit
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Tuesday -->
+
+            <tr data-day="tuesday">
+
+              <td>
+                <strong>Tuesday</strong>
+              </td>
+
+              <td>
+                <span class="tag tag-verified">
+                  Available
+                </span>
+              </td>
+
+              <td>
+                09:00 AM - 05:00 PM
+              </td>
+
+              <td>
+                01:00 PM - 02:00 PM
+              </td>
+
+              <td>
+                5
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="editSchedule('tuesday')"
+                >
+                  Edit
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Wednesday -->
+
+            <tr data-day="wednesday">
+
+              <td>
+                <strong>Wednesday</strong>
+              </td>
+
+              <td>
+                <span class="tag tag-verified">
+                  Available
+                </span>
+              </td>
+
+              <td>
+                09:00 AM - 05:00 PM
+              </td>
+
+              <td>
+                01:00 PM - 02:00 PM
+              </td>
+
+              <td>
+                7
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="editSchedule('wednesday')"
+                >
+                  Edit
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Thursday -->
+
+            <tr data-day="thursday">
+
+              <td>
+                <strong>Thursday</strong>
+              </td>
+
+              <td>
+                <span class="tag tag-verified">
+                  Available
+                </span>
+              </td>
+
+              <td>
+                09:00 AM - 05:00 PM
+              </td>
+
+              <td>
+                01:00 PM - 02:00 PM
+              </td>
+
+              <td>
+                4
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="editSchedule('thursday')"
+                >
+                  Edit
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Friday -->
+
+            <tr data-day="friday">
+
+              <td>
+                <strong>Friday</strong>
+              </td>
+
+              <td>
+                <span class="tag tag-unverified">
+                  Unavailable
+                </span>
+              </td>
+
+              <td>
+                —
+              </td>
+
+              <td>
+                —
+              </td>
+
+              <td>
+                0
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="editSchedule('friday')"
+                >
+                  Edit
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Saturday -->
+
+            <tr data-day="saturday">
+
+              <td>
+                <strong>Saturday</strong>
+              </td>
+
+              <td>
+                <span class="tag tag-verified">
+                  Available
+                </span>
+              </td>
+
+              <td>
+                10:00 AM - 02:00 PM
+              </td>
+
+              <td>
+                —
+              </td>
+
+              <td>
+                3
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="editSchedule('saturday')"
+                >
+                  Edit
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Sunday -->
+
+            <tr data-day="sunday">
+
+              <td>
+                <strong>Sunday</strong>
+              </td>
+
+              <td>
+                <span class="tag tag-unverified">
+                  Unavailable
+                </span>
+              </td>
+
+              <td>
+                —
+              </td>
+
+              <td>
+                —
+              </td>
+
+              <td>
+                0
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="editSchedule('sunday')"
+                >
+                  Edit
+                </button>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         Today's Schedule
+    ========================== -->
+
+    <div class="card">
+
+      <h3>Today's Schedule</h3>
+
+      <p style="color: var(--muted); margin-bottom: 18px;">
+        Your appointments and available time slots for today.
+      </p>
+
+
+      <div class="doctor-card">
+
+        <div class="info">
+
+          <h4>09:00 AM - 09:30 AM</h4>
+
+          <p>
+            Available consultation slot
+          </p>
+
+        </div>
+
+        <span class="tag tag-verified">
+          Available
+        </span>
+
+      </div>
+
+
+      <div class="doctor-card">
+
+        <div class="info">
+
+          <h4>10:00 AM - 10:30 AM</h4>
+
+          <p>
+            John Doe — Fever and cough
+          </p>
+
+        </div>
+
+        <span class="tag tag-confirmed">
+          Confirmed
+        </span>
+
+      </div>
+
+
+      <div class="doctor-card">
+
+        <div class="info">
+
+          <h4>11:00 AM - 11:30 AM</h4>
+
+          <p>
+            Sarah Ahmed — Chest pain
+          </p>
+
+        </div>
+
+        <span class="tag tag-confirmed">
+          Confirmed
+        </span>
+
+      </div>
+
+
+      <div class="doctor-card">
+
+        <div class="info">
+
+          <h4>01:00 PM - 02:00 PM</h4>
+
+          <p>
+            Lunch break
+          </p>
+
+        </div>
+
+        <span class="tag tag-cancelled">
+          Break
+        </span>
+
+      </div>
+
+
+      <div class="doctor-card">
+
+        <div class="info">
+
+          <h4>02:00 PM - 02:30 PM</h4>
+
+          <p>
+            Available consultation slot
+          </p>
+
+        </div>
+
+        <span class="tag tag-verified">
+          Available
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- Success Message -->
+
+    <div
+      id="scheduleMessage"
+      class="alert alert-success"
+      style="display: none;"
+    >
+      Schedule updated successfully.
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       JavaScript
+  ========================== -->
+
+<script src="../api.js"></script>
+
+  <script>
+
+    function editSchedule(day) {
+
+      document.getElementById("scheduleDay").value = day;
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    function saveSchedule() {
+
+      const day =
+        document.getElementById("scheduleDay").value;
+
+      const status =
+        document.getElementById("scheduleStatus").value;
+
+      const startTime =
+        document.getElementById("startTime").value;
+
+      const endTime =
+        document.getElementById("endTime").value;
+
+      const breakStart =
+        document.getElementById("breakStart").value;
+
+      const breakEnd =
+        document.getElementById("breakEnd").value;
+
+
+      if (
+        status === "available" &&
+        (!startTime || !endTime)
+      ) {
+
+        alert("Please select a start and end time.");
+
+        return;
+
+      }
+
+
+      const row =
+        document.querySelector(
+          `#weeklyScheduleBody tr[data-day="${day}"]`
+        );
+
+
+      if (!row) {
+        return;
+      }
+
+
+      const cells = row.querySelectorAll("td");
+
+
+      if (status === "available") {
+
+        cells[1].innerHTML = `
+          <span class="tag tag-verified">
+            Available
+          </span>
+        `;
+
+        cells[2].textContent =
+          formatTime(startTime) +
+          " - " +
+          formatTime(endTime);
+
+        cells[3].textContent =
+          breakStart && breakEnd
+            ? formatTime(breakStart) +
+              " - " +
+              formatTime(breakEnd)
+            : "—";
+
+      } else {
+
+        cells[1].innerHTML = `
+          <span class="tag tag-unverified">
+            Unavailable
+          </span>
+        `;
+
+        cells[2].textContent = "—";
+        cells[3].textContent = "—";
+
+      }
+
+
+      const message =
+        document.getElementById("scheduleMessage");
+
+      message.style.display = "block";
+
+
+      setTimeout(() => {
+
+        message.style.display = "none";
+
+      }, 3000);
+
+    }
+
+
+    function formatTime(time) {
+
+      if (!time) {
+        return "—";
+      }
+
+      const [hours, minutes] =
+        time.split(":");
+
+      let hour =
+        parseInt(hours);
+
+      const period =
+        hour >= 12 ? "PM" : "AM";
+
+      hour =
+        hour % 12 || 12;
+
+      return (
+        hour +
+        ":" +
+        minutes +
+        " " +
+        period
+      );
+
+    }
+
+
+    function handleLogout() {
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      window.location.href =
+        "login.html";
+
+    }
+
+  </script>
+
+</body>
+</html>

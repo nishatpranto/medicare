@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Doctor Dashboard - Patients</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =========================
+       Navbar
+  ========================== -->
+
+  <header class="navbar">
+
+    <div class="logo">
+      🩺 MediCare
+    </div>
+
+    <nav>
+      <a href="doctor-dashboard.html">
+        Dashboard
+      </a>
+
+      <a href="doctor-dashboard-appointment.html">
+        Appointments
+      </a>
+
+      <a href="doctor-dashboard-patient.html" class="active">
+        Patients
+      </a>
+
+      <a href="doctor-dashboard-schedule.html">
+        Schedule
+      </a>
+
+      <button onclick="handleLogout()">
+        Logout
+      </button>
+    </nav>
+
+  </header>
+
+
+  <!-- =========================
+       Main Content
+  ========================== -->
+
+  <main class="container">
+
+    <!-- Page Header -->
+
+    <div class="card">
+
+      <h2>My Patients</h2>
+
+      <p style="color: var(--muted);">
+        View and manage patients who have appointments with you.
+      </p>
+
+    </div>
+
+
+    <!-- =========================
+         Patient Statistics
+    ========================== -->
+
+    <div class="features">
+
+      <div class="feature-card">
+
+        <div class="icon">
+          👥
+        </div>
+
+        <h3>Total Patients</h3>
+
+        <p>
+          <strong id="totalPatientsCount">24</strong>
+          registered patients
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="icon">
+          📅
+        </div>
+
+        <h3>Today's Patients</h3>
+
+        <p>
+          <strong id="todayPatientsCount">4</strong>
+          appointments today
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="icon">
+          🩺
+        </div>
+
+        <h3>Active Patients</h3>
+
+        <p>
+          <strong id="activePatientsCount">18</strong>
+          active patients
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="icon">
+          ✓
+        </div>
+
+        <h3>Verified</h3>
+
+        <p>
+          <strong id="verifiedPatientsCount">21</strong>
+          verified patients
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         Search & Filter
+    ========================== -->
+
+    <div class="card">
+
+      <div class="grid-2">
+
+        <div class="form-group">
+
+          <label for="patientSearch">
+            Search Patients
+          </label>
+
+          <input
+            type="search"
+            id="patientSearch"
+            placeholder="Search by name or email..."
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="patientStatusFilter">
+            Patient Status
+          </label>
+
+          <select id="patientStatusFilter">
+
+            <option value="all">
+              All Patients
+            </option>
+
+            <option value="active">
+              Active
+            </option>
+
+            <option value="inactive">
+              Inactive
+            </option>
+
+            <option value="verified">
+              Verified
+            </option>
+
+            <option value="unverified">
+              Unverified
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         Patient List
+    ========================== -->
+
+    <div class="card">
+
+      <h3>Patient List</h3>
+
+      <p style="color: var(--muted); margin-bottom: 18px;">
+        View patient information and medical history.
+      </p>
+
+
+      <div style="overflow-x: auto;">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Patient</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Contact</th>
+              <th>Last Visit</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody id="patientsTableBody">
+
+            <!-- Patient 1 -->
+
+            <tr
+              data-status="active"
+              data-verified="verified"
+            >
+
+              <td>
+                <strong>John Doe</strong>
+
+                <br>
+
+                <small style="color: var(--muted);">
+                  john@example.com
+                </small>
+              </td>
+
+              <td>
+                32
+              </td>
+
+              <td>
+                Male
+              </td>
+
+              <td>
+                +880 1712-345678
+              </td>
+
+              <td>
+                Aug 12, 2026
+              </td>
+
+              <td>
+                <span class="tag tag-verified">
+                  Verified
+                </span>
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="viewPatient(1)"
+                >
+                  View
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Patient 2 -->
+
+            <tr
+              data-status="active"
+              data-verified="verified"
+            >
+
+              <td>
+                <strong>Sarah Ahmed</strong>
+
+                <br>
+
+                <small style="color: var(--muted);">
+                  sarah@example.com
+                </small>
+              </td>
+
+              <td>
+                28
+              </td>
+
+              <td>
+                Female
+              </td>
+
+              <td>
+                +880 1812-456789
+              </td>
+
+              <td>
+                Aug 10, 2026
+              </td>
+
+              <td>
+                <span class="tag tag-verified">
+                  Verified
+                </span>
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="viewPatient(2)"
+                >
+                  View
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Patient 3 -->
+
+            <tr
+              data-status="active"
+              data-verified="verified"
+            >
+
+              <td>
+                <strong>Rahim Khan</strong>
+
+                <br>
+
+                <small style="color: var(--muted);">
+                  rahim@example.com
+                </small>
+              </td>
+
+              <td>
+                45
+              </td>
+
+              <td>
+                Male
+              </td>
+
+              <td>
+                +880 1912-567890
+              </td>
+
+              <td>
+                Aug 07, 2026
+              </td>
+
+              <td>
+                <span class="tag tag-verified">
+                  Verified
+                </span>
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="viewPatient(3)"
+                >
+                  View
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Patient 4 -->
+
+            <tr
+              data-status="inactive"
+              data-verified="unverified"
+            >
+
+              <td>
+                <strong>Nusrat Mahin</strong>
+
+                <br>
+
+                <small style="color: var(--muted);">
+                  nusrat@example.com
+                </small>
+              </td>
+
+              <td>
+                35
+              </td>
+
+              <td>
+                Female
+              </td>
+
+              <td>
+                +880 1612-678901
+              </td>
+
+              <td>
+                Jul 28, 2026
+              </td>
+
+              <td>
+                <span class="tag tag-unverified">
+                  Unverified
+                </span>
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="viewPatient(4)"
+                >
+                  View
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Patient 5 -->
+
+            <tr
+              data-status="active"
+              data-verified="verified"
+            >
+
+              <td>
+                <strong>Tanvir Hasan</strong>
+
+                <br>
+
+                <small style="color: var(--muted);">
+                  tanvir@example.com
+                </small>
+              </td>
+
+              <td>
+                41
+              </td>
+
+              <td>
+                Male
+              </td>
+
+              <td>
+                +880 1512-789012
+              </td>
+
+              <td>
+                Aug 05, 2026
+              </td>
+
+              <td>
+                <span class="tag tag-verified">
+                  Verified
+                </span>
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-small btn-outline"
+                  onclick="viewPatient(5)"
+                >
+                  View
+                </button>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- Empty State -->
+
+      <div
+        id="patientsEmptyState"
+        class="alert"
+        style="display: none; margin-top: 20px;"
+      >
+        No patients match your search or filter.
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         Patient Details
+    ========================== -->
+
+    <div
+      class="card"
+      id="patientDetails"
+      style="display: none;"
+    >
+
+      <h3>
+        Patient Details
+      </h3>
+
+
+      <div class="doctor-card">
+
+        <div class="info">
+
+          <h4 id="detailPatientName">
+            John Doe
+          </h4>
+
+          <p id="detailPatientEmail">
+            john@example.com
+          </p>
+
+          <p id="detailPatientPhone">
+            +880 1712-345678
+          </p>
+
+        </div>
+
+        <span
+          class="tag tag-verified"
+          id="detailPatientStatus"
+        >
+          Verified
+        </span>
+
+      </div>
+
+
+      <div class="grid-2">
+
+        <div>
+
+          <p>
+            <strong>Age:</strong>
+            <span id="detailPatientAge">
+              32
+            </span>
+          </p>
+
+          <p>
+            <strong>Gender:</strong>
+            <span id="detailPatientGender">
+              Male
+            </span>
+          </p>
+
+        </div>
+
+
+        <div>
+
+          <p>
+            <strong>Last Visit:</strong>
+            <span id="detailPatientLastVisit">
+              Aug 12, 2026
+            </span>
+          </p>
+
+          <p>
+            <strong>Total Appointments:</strong>
+            <span id="detailPatientAppointments">
+              6
+            </span>
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       JavaScript
+  ========================== -->
+
+ <script src="../api.js"></script>
+
+  <script>
+
+    const patientData = {
+
+      1: {
+        name: "John Doe",
+        email: "john@example.com",
+        phone: "+880 1712-345678",
+        age: "32",
+        gender: "Male",
+        lastVisit: "Aug 12, 2026",
+        appointments: "6",
+        status: "Verified"
+      },
+
+      2: {
+        name: "Sarah Ahmed",
+        email: "sarah@example.com",
+        phone: "+880 1812-456789",
+        age: "28",
+        gender: "Female",
+        lastVisit: "Aug 10, 2026",
+        appointments: "5",
+        status: "Verified"
+      },
+
+      3: {
+        name: "Rahim Khan",
+        email: "rahim@example.com",
+        phone: "+880 1912-567890",
+        age: "45",
+        gender: "Male",
+        lastVisit: "Aug 07, 2026",
+        appointments: "8",
+        status: "Verified"
+      },
+
+      4: {
+        name: "Nusrat Mahin",
+        email: "nusrat@example.com",
+        phone: "+880 1612-678901",
+        age: "35",
+        gender: "Female",
+        lastVisit: "Jul 28, 2026",
+        appointments: "3",
+        status: "Unverified"
+      },
+
+      5: {
+        name: "Tanvir Hasan",
+        email: "tanvir@example.com",
+        phone: "+880 1512-789012",
+        age: "41",
+        gender: "Male",
+        lastVisit: "Aug 05, 2026",
+        appointments: "7",
+        status: "Verified"
+      }
+
+    };
+
+
+    /* =========================
+       View Patient
+    ========================== */
+
+    function viewPatient(id) {
+
+      const patient = patientData[id];
+
+      if (!patient) {
+        return;
+      }
+
+      document.getElementById("detailPatientName").textContent =
+        patient.name;
+
+      document.getElementById("detailPatientEmail").textContent =
+        patient.email;
+
+      document.getElementById("detailPatientPhone").textContent =
+        patient.phone;
+
+      document.getElementById("detailPatientAge").textContent =
+        patient.age;
+
+      document.getElementById("detailPatientGender").textContent =
+        patient.gender;
+
+      document.getElementById("detailPatientLastVisit").textContent =
+        patient.lastVisit;
+
+      document.getElementById("detailPatientAppointments").textContent =
+        patient.appointments;
+
+      document.getElementById("detailPatientStatus").textContent =
+        patient.status;
+
+
+      const details = document.getElementById("patientDetails");
+
+      details.style.display = "block";
+
+      window.scrollTo({
+        top: details.offsetTop - 80,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    /* =========================
+       Search & Filter
+    ========================== */
+
+    const patientSearch =
+      document.getElementById("patientSearch");
+
+    const patientStatusFilter =
+      document.getElementById("patientStatusFilter");
+
+    const patientsTableBody =
+      document.getElementById("patientsTableBody");
+
+    const patientsEmptyState =
+      document.getElementById("patientsEmptyState");
+
+
+    function filterPatients() {
+
+      const searchValue =
+        patientSearch.value.toLowerCase().trim();
+
+      const selectedStatus =
+        patientStatusFilter.value;
+
+      const rows =
+        patientsTableBody.querySelectorAll("tr");
+
+      let visiblePatients = 0;
+
+
+      rows.forEach(row => {
+
+        const rowText =
+          row.textContent.toLowerCase();
+
+        const patientStatus =
+          row.dataset.status;
+
+        const verifiedStatus =
+          row.dataset.verified;
+
+
+        const matchesSearch =
+          rowText.includes(searchValue);
+
+
+        let matchesFilter = true;
+
+
+        if (selectedStatus === "active") {
+
+          matchesFilter =
+            patientStatus === "active";
+
+        }
+
+        else if (selectedStatus === "inactive") {
+
+          matchesFilter =
+            patientStatus === "inactive";
+
+        }
+
+        else if (selectedStatus === "verified") {
+
+          matchesFilter =
+            verifiedStatus === "verified";
+
+        }
+
+        else if (selectedStatus === "unverified") {
+
+          matchesFilter =
+            verifiedStatus === "unverified";
+
+        }
+
+
+        if (matchesSearch && matchesFilter) {
+
+          row.style.display = "";
+
+          visiblePatients++;
+
+        }
+
+        else {
+
+          row.style.display = "none";
+
+        }
+
+      });
+
+
+      patientsEmptyState.style.display =
+        visiblePatients === 0
+          ? "block"
+          : "none";
+
+    }
+
+
+    patientSearch.addEventListener(
+      "input",
+      filterPatients
+    );
+
+
+    patientStatusFilter.addEventListener(
+      "change",
+      filterPatients
+    );
+
+
+    /* =========================
+       Logout
+    ========================== */
+
+    function handleLogout() {
+
+     logout();
+
+    }
+
+  </script>
+
+</body>
+</html>

@@ -16,11 +16,11 @@
         </div>
 
         <nav>
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">Appointments</a>
-            <a href="#">Patients</a>
-            <a href="#">Schedule</a>
-            <button class="dark-toggle">🌙</button>
+            <a href="doctor-dashboard.html" class="active">Dashboard</a>
+            <a href="doctor-dashboard-appointment.html">Appointments</a>
+            <a href="doctor-dashboard-patient.html">Patients</a>
+            <a href="doctor-dashboard-schedule.html">Schedule</a>
+            <button onclick="handleLogout()">Logout</button>
         </nav>
     </header>
 
@@ -286,6 +286,11 @@
     <div class="reminder-toast">
         ⏰ Next Appointment starts in 15 minutes.
     </div>
-
+    <script src="../api.js"></script>
+<script>
+  function handleLogout(){
+    logout()
+  }
+</script>
 </body>
 </html>

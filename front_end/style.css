@@ -347,7 +347,18 @@ body.dark {
   --border: #334155;
 }
 
+.sidebar-item {
+  text-decoration: none;
+  color: var(--text);
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+  text-decoration: none;
+}
+
 @media (max-width: 768px) {
   .dashboard-grid { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
 }
+
