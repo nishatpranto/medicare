@@ -33,38 +33,38 @@
 
                 <h3>Doctor Panel</h3>
 
-                <div class="sidebar-item active">
+                    <a href="doctor-dashboard.html" class="sidebar-item active" data-section="overview">
                     📊 Dashboard
-                </div>
+                </a>
 
-                <div class="sidebar-item">
+                <a href="doctor-dashboard-appointment.html" class="sidebar-item" data-section="appointments">
                     📅 Today's Appointments
-                </div>
+                </a>
 
-                <div class="sidebar-item">
+                <a href="doctor-dashboard-patient.html" class="sidebar-item" data-section="patients">
                     👨‍⚕️ My Patients
-                </div>
+                </a>
 
-                <div class="sidebar-item">
+                <a href="#section-records" class="sidebar-item" data-section="records">
                     📁 Medical Records
-                </div>
+                </a>
 
-                <div class="sidebar-item">
+                <a href="#section-prescriptions" class="sidebar-item" data-section="prescriptions">
                     📝 Prescriptions
-                </div>
+                </a>
 
-                <div class="sidebar-item">
+                <a href="doctor-dashboard-schedule.html" class="sidebar-item" data-section="schedule">
                     🗓 Schedule
-                </div>
+                </a>
 
-                <div class="sidebar-item">
+                <a href="#section-settings" class="sidebar-item" data-section="settings">
                     ⚙ Settings
-                </div>
+                </a>
 
             </aside>
 
             <!-- Main Content -->
-            <main>
+            <main id="section-overview">
 
                 <!-- Welcome -->
                 <div class="card">
@@ -94,7 +94,7 @@
                 </div>
 
                 <!-- Today's Appointments -->
-                <div class="card">
+                <div class="card" id="section-appointments">
 
                     <h3>Today's Schedule</h3>
 
@@ -183,7 +183,7 @@
                 </div>
 
                 <!-- Recent Patients -->
-                <div class="card">
+                <div class="card" id="section-patients">
 
                     <h3>Recent Patients</h3>
 
@@ -229,7 +229,7 @@
                 </div>
 
                 <!-- Notifications -->
-                <div class="card">
+                <div class="card" id="section-records">
 
                     <h3>Notifications</h3>
 
@@ -244,7 +244,7 @@
                 </div>
 
                 <!-- FAQ -->
-                <div class="card">
+                <div class="card" id="section-prescriptions">
 
                     <h3>Quick Notes</h3>
 
@@ -276,6 +276,13 @@
 
                 </div>
 
+                <div class="card" id="section-settings">
+                    <h3>Practice Settings</h3>
+                    <p style="color: var(--muted); margin: 0;">
+                        Update clinic preferences, notification settings, and consultation reminders.
+                    </p>
+                </div>
+
             </main>
 
         </div>
@@ -286,10 +293,44 @@
     <div class="reminder-toast">
         ⏰ Next Appointment starts in 15 minutes.
     </div>
-    <script src="../api.js"></script>
+    <script src="api.js"></script>
 <script>
-  function handleLogout(){
-    logout()
+  document.addEventListener('DOMContentLoaded', function () {
+    requireAuth('doctor');
+
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+      item.addEventListener('click', function (event) {
+        const isInternalAnchor = this.getAttribute('href') && this.getAttribute('href').startsWith('#');
+        if (isInternalAnchor) {
+          event.preventDefault();
+          const targetId = this.getAttribute('href').slice(1);
+          const target = document.getElementById(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+
+        document.querySelectorAll('.sidebar-item').forEach(link => link.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', function () {
+        const body = this.nextElementSibling;
+        const isOpen = body.classList.contains('open');
+        document.querySelectorAll('.accordion-body').forEach(panel => panel.classList.remove('open'));
+        document.querySelectorAll('.accordion-header span').forEach(span => span.textContent = '+');
+        if (!isOpen) {
+          body.classList.add('open');
+          this.querySelector('span').textContent = '−';
+        }
+      });
+    });
+  });
+
+  function handleLogout() {
+    logout();
   }
 </script>
 </body>

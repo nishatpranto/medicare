@@ -336,10 +336,14 @@
 
   </main>
 
-<script src="../api.js"></script>
+<script src="api.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      requireAuth('doctor');
+    });
+
     function handleLogout() {
-        logout()
+        logout();
     }
 
 

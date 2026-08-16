@@ -1,13 +1,40 @@
 function toggleAcc(header) {
-  const body = header.nextElementSibling;
-  const span = header.querySelector('span');
+  const body = header && header.nextElementSibling;
+  const span = header && header.querySelector('span');
+  if (!body || !span) return;
+
   const isOpen = body.classList.contains('open');
   document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
   document.querySelectorAll('.accordion-header span').forEach(s => s.textContent = '+');
+
   if (!isOpen) {
     body.classList.add('open');
     span.textContent = '−';
   }
+}
+
+function initEmergencyAccordions() {
+  document.querySelectorAll('.accordion-header').forEach(header => {
+    if (header.dataset.bound === 'true') return;
+
+    header.tabIndex = 0;
+    header.onclick = function () {
+      toggleAcc(header);
+    };
+    header.onkeydown = function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleAcc(header);
+      }
+    };
+    header.dataset.bound = 'true';
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initEmergencyAccordions);
+} else {
+  initEmergencyAccordions();
 }
 
 async function loadContacts() {
